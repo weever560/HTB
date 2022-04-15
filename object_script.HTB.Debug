@@ -1,0 +1,10 @@
+debug/class1.o
+debug/class2.o
+debug/main.o
+debug/mainwindow.o
+debug/widget.o
+debug/qrc_img.o
+debug/moc_class1.o
+debug/moc_class2.o
+debug/moc_mainwindow.o
+debug/moc_widget.o

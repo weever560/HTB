@@ -1,0 +1,10 @@
+release/class1.o
+release/class2.o
+release/main.o
+release/mainwindow.o
+release/widget.o
+release/qrc_img.o
+release/moc_class1.o
+release/moc_class2.o
+release/moc_mainwindow.o
+release/moc_widget.o
