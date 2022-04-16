@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_class2_t {
-    QByteArrayData data[18];
-    char stringdata0[259];
+    QByteArrayData data[19];
+    char stringdata0[242];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,28 +36,30 @@ QT_MOC_LITERAL(1, 7, 13), // "message_send2"
 QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 5), // "char*"
 QT_MOC_LITERAL(4, 28, 3), // "msg"
-QT_MOC_LITERAL(5, 32, 12), // "recv_message"
-QT_MOC_LITERAL(6, 45, 7), // "message"
-QT_MOC_LITERAL(7, 53, 13), // "connected_isr"
-QT_MOC_LITERAL(8, 67, 12), // "stateupdata2"
-QT_MOC_LITERAL(9, 80, 25), // "on_checkBox2_stateChanged"
-QT_MOC_LITERAL(10, 106, 4), // "arg1"
-QT_MOC_LITERAL(11, 111, 20), // "on_d1_2_stateChanged"
-QT_MOC_LITERAL(12, 132, 20), // "on_d2_2_stateChanged"
-QT_MOC_LITERAL(13, 153, 20), // "on_d3_2_stateChanged"
-QT_MOC_LITERAL(14, 174, 20), // "on_d4_2_stateChanged"
-QT_MOC_LITERAL(15, 195, 21), // "on_fs1_2_stateChanged"
-QT_MOC_LITERAL(16, 217, 21), // "on_fs2_2_stateChanged"
-QT_MOC_LITERAL(17, 239, 19) // "on_kt2_stateChanged"
+QT_MOC_LITERAL(5, 32, 13), // "message_rece2"
+QT_MOC_LITERAL(6, 46, 12), // "recv_message"
+QT_MOC_LITERAL(7, 59, 7), // "message"
+QT_MOC_LITERAL(8, 67, 13), // "connected_isr"
+QT_MOC_LITERAL(9, 81, 12), // "stateupdata2"
+QT_MOC_LITERAL(10, 94, 20), // "on_checkBox2_clicked"
+QT_MOC_LITERAL(11, 115, 15), // "on_d1_2_clicked"
+QT_MOC_LITERAL(12, 131, 15), // "on_d2_2_clicked"
+QT_MOC_LITERAL(13, 147, 15), // "on_d3_2_clicked"
+QT_MOC_LITERAL(14, 163, 15), // "on_d4_2_clicked"
+QT_MOC_LITERAL(15, 179, 16), // "on_fs1_2_clicked"
+QT_MOC_LITERAL(16, 196, 16), // "on_fs2_2_clicked"
+QT_MOC_LITERAL(17, 213, 14), // "on_kt2_clicked"
+QT_MOC_LITERAL(18, 228, 13) // "send_message2"
 
     },
     "class2\0message_send2\0\0char*\0msg\0"
-    "recv_message\0message\0connected_isr\0"
-    "stateupdata2\0on_checkBox2_stateChanged\0"
-    "arg1\0on_d1_2_stateChanged\0"
-    "on_d2_2_stateChanged\0on_d3_2_stateChanged\0"
-    "on_d4_2_stateChanged\0on_fs1_2_stateChanged\0"
-    "on_fs2_2_stateChanged\0on_kt2_stateChanged"
+    "message_rece2\0recv_message\0message\0"
+    "connected_isr\0stateupdata2\0"
+    "on_checkBox2_clicked\0on_d1_2_clicked\0"
+    "on_d2_2_clicked\0on_d3_2_clicked\0"
+    "on_d4_2_clicked\0on_fs1_2_clicked\0"
+    "on_fs2_2_clicked\0on_kt2_clicked\0"
+    "send_message2"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,44 +69,48 @@ static const uint qt_meta_data_class2[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   74,    2, 0x06 /* Public */,
+       1,    1,   84,    2, 0x06 /* Public */,
+       5,    0,   87,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   77,    2, 0x08 /* Private */,
-       7,    0,   80,    2, 0x08 /* Private */,
-       8,    0,   81,    2, 0x08 /* Private */,
-       9,    1,   82,    2, 0x08 /* Private */,
-      11,    1,   85,    2, 0x08 /* Private */,
-      12,    1,   88,    2, 0x08 /* Private */,
-      13,    1,   91,    2, 0x08 /* Private */,
-      14,    1,   94,    2, 0x08 /* Private */,
-      15,    1,   97,    2, 0x08 /* Private */,
-      16,    1,  100,    2, 0x08 /* Private */,
-      17,    1,  103,    2, 0x08 /* Private */,
+       6,    1,   88,    2, 0x08 /* Private */,
+       8,    0,   91,    2, 0x08 /* Private */,
+       9,    0,   92,    2, 0x08 /* Private */,
+      10,    0,   93,    2, 0x08 /* Private */,
+      11,    0,   94,    2, 0x08 /* Private */,
+      12,    0,   95,    2, 0x08 /* Private */,
+      13,    0,   96,    2, 0x08 /* Private */,
+      14,    0,   97,    2, 0x08 /* Private */,
+      15,    0,   98,    2, 0x08 /* Private */,
+      16,    0,   99,    2, 0x08 /* Private */,
+      17,    0,  100,    2, 0x08 /* Private */,
+      18,    1,  101,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QByteArray,    6,
+    QMetaType::Void, QMetaType::QByteArray,    7,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -116,17 +122,19 @@ void class2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->message_send2((*reinterpret_cast< char*(*)>(_a[1]))); break;
-        case 1: _t->recv_message((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
-        case 2: _t->connected_isr(); break;
-        case 3: _t->stateupdata2(); break;
-        case 4: _t->on_checkBox2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->on_d1_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->on_d2_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->on_d3_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: _t->on_d4_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->on_fs1_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 10: _t->on_fs2_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->on_kt2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->message_rece2(); break;
+        case 2: _t->recv_message((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 3: _t->connected_isr(); break;
+        case 4: _t->stateupdata2(); break;
+        case 5: _t->on_checkBox2_clicked(); break;
+        case 6: _t->on_d1_2_clicked(); break;
+        case 7: _t->on_d2_2_clicked(); break;
+        case 8: _t->on_d3_2_clicked(); break;
+        case 9: _t->on_d4_2_clicked(); break;
+        case 10: _t->on_fs1_2_clicked(); break;
+        case 11: _t->on_fs2_2_clicked(); break;
+        case 12: _t->on_kt2_clicked(); break;
+        case 13: _t->send_message2((*reinterpret_cast< char*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -135,6 +143,13 @@ void class2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             using _t = void (class2::*)(char * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&class2::message_send2)) {
                 *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (class2::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&class2::message_rece2)) {
+                *result = 1;
                 return;
             }
         }
@@ -170,13 +185,13 @@ int class2::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 14;
     }
     return _id;
 }
@@ -186,6 +201,12 @@ void class2::message_send2(char * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void class2::message_rece2()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

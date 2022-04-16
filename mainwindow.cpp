@@ -120,7 +120,6 @@ void MainWindow::recv_message(QByteArray message)
 {
     int num = 0 ;   //记录#的多少，相对应数据含义
     QString class_no="0";
-    QString temp1="0",temp2="0";//亮度整数
     int temp[10]={0};
     int locat,length;
 
@@ -181,15 +180,13 @@ void MainWindow::recv_message(QByteArray message)
                    if(class_no == '1')
                     {
                         Light1 = message.mid(locat,length);
-                        temp1 = message.mid(locat,length);   //由于总控ui设计能力有限，只能读三位
                     }
                   else if(class_no == '2')
                     {
                         Light2 = message.mid(locat,length);
-                        temp2 = message.mid(locat,length);
                     }
-                   ui->textBrowser1_ld->setText(temp1);
-                   ui->textBrowser2_ld->setText(temp2);
+                   ui->textBrowser1_ld->setText(Light1);
+                   ui->textBrowser2_ld->setText(Light2);
                 }break;
 
             case 6:     //风扇
@@ -261,10 +258,20 @@ void MainWindow::recv_message(QByteArray message)
 //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
 void MainWindow::send_message(char * msg1)
 {
+    //提高发送质量的同时提高发送次数
     QString payload= msg1;//消息内容体
-    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit());//发布消息
+    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
 
-    qDebug()<<"发送成功"<<endl;
+    qDebug()<<"发送成功"<<payload<<endl;
 }
 
 void MainWindow::on_pushButton1_clicked()

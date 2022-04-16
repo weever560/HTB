@@ -24,14 +24,14 @@ signals:
 protected slots:
     void connected_isr();//连接回调函数
 private slots:
-    void recv_message(QByteArray message);//接收消息回调
+    void recv_message(QByteArray message);//接收mqtt消息回调
     void on_pushButton1_clicked();
 
     void on_pushButton2_clicked();
 
     void on_pushButton_clicked();
 
-    void send_message(char * msg1);    //发送信息
+    void send_message(char * msg1);    //收到分控改变信号向服务器发送信息
 
 public:
     MainWindow(QWidget *parent = nullptr);

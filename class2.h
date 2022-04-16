@@ -20,6 +20,8 @@ public:
 
 signals:
     void message_send2(char * msg);
+    void message_rece2();
+
 private slots:
     void recv_message(QByteArray message);//接收消息回调
     void connected_isr();//连接回调函数
@@ -27,21 +29,23 @@ private slots:
 
     void stateupdata2();
 
-    void on_checkBox2_stateChanged(int arg1);
+    void on_checkBox2_clicked();
 
-    void on_d1_2_stateChanged(int arg1);
+    void on_d1_2_clicked();
 
-    void on_d2_2_stateChanged(int arg1);
+    void on_d2_2_clicked();
 
-    void on_d3_2_stateChanged(int arg1);
+    void on_d3_2_clicked();
 
-    void on_d4_2_stateChanged(int arg1);
+    void on_d4_2_clicked();
 
-    void on_fs1_2_stateChanged(int arg1);
+    void on_fs1_2_clicked();
 
-    void on_fs2_2_stateChanged(int arg1);
+    void on_fs2_2_clicked();
 
-    void on_kt2_stateChanged(int arg1);
+    void on_kt2_clicked();
+
+    void send_message2(char * );    //分控，发送信息
 
 private:
     Ui::class2 *ui;

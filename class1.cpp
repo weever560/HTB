@@ -6,13 +6,12 @@
 #include <QSerialPortInfo>    //提供系统中存在的串口的信息
 
 //全局变量定义
-int mode1=0;   //系统自动手动状态的标志变量 1:自动控制 0：手动控制
+int mode1=1;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
 extern QString Temp1,Humi1,Light1;//温度、湿度、亮度
 extern QString FS1_1,FS1_2,D1_1,D1_2,D1_3,D1_4;//风扇和灯
 extern QString KT1;     //空调
 extern QString Card_ID1;//最后处理过的卡号字符串
-int HumanNum1=35;//人数
-
+int HumanNum1=0;//人数
 extern QByteArray input[255];
 //创建串口对象
 QSerialPort serial;
@@ -83,8 +82,18 @@ void class1::startshow()
         client1->cleanSession();//清除缓存
        // client->setVersion(QMQTT::MQTTVersion::V3_1_1);//设置mqtt版
         client1->connectToHost();//连接服务器
+
+
         connect(client1,&QMqttClient::connected,
                         this,&class1::connected_isr);
+        connect(client1,&QMqttClient::messageReceived,
+                        this,&class1::recv_message);
+
+        connect(this,SIGNAL(message_rece()),
+                    this,SLOT(stateupdata1()));
+
+        connect(this,SIGNAL(message_send(char * )),
+                    this,SLOT(send_message1(char * )));
 }
 
 //成功连接回调
@@ -94,11 +103,159 @@ void class1::connected_isr()
     qDebug()<<"Connected class1!";
 }
 
+void class1::send_message1(char * msg)
+{
+    QString payload= msg;//消息内容体
+    client1->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client1->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client1->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    for(int i = 0;i<100;i++)
+    {;}
+    client1->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit(),2);//发布消息
+    qDebug()<<"1发送成功"<<payload<<endl;
+}
 //收到消息回调
 void class1::recv_message(QByteArray message)
 {
+    int num = 0 ;   //记录#的多少，相对应数据含义
+    QString class_no="0";
+    QString temp1="0",temp2="0";//亮度整数
+    int temp[10]={0};
+    int locat,length;
 
+    ui->textBrowser1_rs->setText(QString::number(HumanNum1));
+    ui->textBrowser1_wd->setText(Temp1);
+    ui->textBrowser1_sd->setText(Humi1);
+    ui->textBrowser1_ld->setText(Light1);
 
+    qDebug()<<"1接收信息:"<<message<<endl;
+
+    for( int i = 0 ; i < message.size()  ; i++  )
+    {
+        if( message[i] == '#' )
+        {
+            num++;
+            temp[num] = i;
+            locat = temp[num-1]+1;
+            length = temp[num]-temp[num-1]-1;
+
+        }
+        else
+        {
+        //读取数据
+        switch(num)
+            {
+            case 1:break;
+            case 2:     //课室号,只能实现一位
+                {
+                    class_no = message.mid(locat,length);
+                }break;
+
+            case 3:     //温度
+                {
+                    if(class_no == '1')
+                    {
+                        Temp1 = message.mid(locat,length);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                    ui->textBrowser1_wd->setText(Temp1);
+
+                }break;
+
+            case 4:     //湿度
+                {
+                    if(class_no == '1')
+                     {
+                        Humi1 = message.mid(locat,length);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                    ui->textBrowser1_sd->setText(Humi1);
+
+                }break;
+
+            case 5:     //亮度
+                {
+                   if(class_no == '1')
+                    {
+                        Light1 = message.mid(locat,length);
+                    }
+                  else if(class_no == '2')
+                    {
+
+                    }
+                   ui->textBrowser1_ld->setText(Light1);
+
+                }break;
+
+            case 6:     //风扇
+                {
+                    if(class_no == '1')
+                    {
+                        FS1_1 = message.mid(locat,1);
+                        FS1_2 = message.mid(locat+1,1);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                }break;
+
+            case 7:     //灯光
+                {
+                    if(class_no == '1')
+                    {
+                        D1_1 = message.mid(locat,1);
+                        D1_2 = message.mid(locat+1,1);
+                        D1_3 = message.mid(locat+2,1);
+                        D1_4 = message.mid(locat+3,1);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                }break;
+
+            case 8:     //空调
+                {
+                    if(class_no == '1')
+                    {
+                        KT1 = message.mid(locat,1);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                }break;
+
+            case 9:     //卡号
+                {
+                    if(class_no == '1')
+                    {
+                        Card_ID1 = message.mid(locat,8);
+                    }
+                    else if(class_no == '2')
+                    {
+
+                    }
+                }break;
+
+        default:{qDebug()<<"error"<<i;}break;
+
+             }
+        }
+
+    }
+    emit message_rece();
 }
 
 // 槽函数实现
@@ -126,22 +283,22 @@ void class1::on_radioButton_clicked()
 
 }
 
-void class1::on_checkBox_stateChanged(int arg1)
+void class1::on_checkBox_clicked()
 {
     switch(mode1)
   {
-    case 0: //手动
+    case 0: //自动
     {
         mode1=1;
     }break;
-    case 1: //自动
+    case 1: //手动
     {
         mode1=0;
     }break;
 
   }
 
-    if(mode1==1)    //自动
+    if(mode1==0)    //自动
     {
         ui->d1->setDisabled(true);
         ui->d2->setDisabled(true);
@@ -151,7 +308,7 @@ void class1::on_checkBox_stateChanged(int arg1)
         ui->fs2->setDisabled(true);
         ui->kt->setDisabled(true);
     }
-    else if(mode1==0)
+    else if(mode1==1)
     {
         ui->d1->setDisabled(false);
         ui->d2->setDisabled(false);
@@ -172,7 +329,7 @@ void class1::on_checkBox_stateChanged(int arg1)
 
 }
 
-void class1::on_d1_stateChanged(int arg1)
+void class1::on_d1_clicked()
 {
     switch (D1_1.toInt())
     {
@@ -181,7 +338,7 @@ void class1::on_d1_stateChanged(int arg1)
     }
     //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    HumanNum1 ++;
+    HumanNum1 ++;//测试用，记得删除！！！
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
@@ -189,7 +346,7 @@ void class1::on_d1_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_d2_stateChanged(int arg1)
+void class1::on_d2_clicked()
 {
     switch (D1_2.toInt())
     {
@@ -205,7 +362,7 @@ void class1::on_d2_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_d3_stateChanged(int arg1)
+void class1::on_d3_clicked()
 {
     switch (D1_3.toInt())
     {
@@ -221,7 +378,7 @@ void class1::on_d3_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_d4_stateChanged(int arg1)
+void class1::on_d4_clicked()
 {
     switch (D1_4.toInt())
     {
@@ -237,7 +394,7 @@ void class1::on_d4_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_fs1_stateChanged(int arg1)
+void class1::on_fs1_clicked()
 {
     switch (FS1_1.toInt())
     {
@@ -253,7 +410,7 @@ void class1::on_fs1_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_fs2_stateChanged(int arg1)
+void class1::on_fs2_clicked()
 {
     switch (FS1_2.toInt())
     {
@@ -269,7 +426,7 @@ void class1::on_fs2_stateChanged(int arg1)
     emit message_send(str);
 }
 
-void class1::on_kt_stateChanged(int arg1)
+void class1::on_kt_clicked()
 {
     switch (KT1.toInt())
     {
