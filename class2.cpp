@@ -58,6 +58,11 @@ class2::class2(QWidget *parent) :
 
 }
 
+void class2::startshow2()
+{
+
+}
+
 class2::~class2()
 {
     delete ui;
@@ -66,8 +71,9 @@ class2::~class2()
 //成功连接回调
 void class2::connected_isr()
 {
-    qDebug()<<"Connected successfully!";
-    client->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
+
+    client2->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
+    qDebug()<<"Connected 2!";
 }
 
 //收到消息回调
@@ -146,9 +152,13 @@ void class2::on_checkBox2_stateChanged(int arg1)
 }
 
 
-void class2::stateupdata2(char *msg)
+void class2::stateupdata2()
 {
     ui->checkBox2_2->setChecked(true);
+    ui->textBrowser1_rs->setText(QString::number(HumanNum2));
+    ui->textBrowser1_wd->setText(Temp2);
+    ui->textBrowser1_sd->setText(Humi2);
+    ui->textBrowser1_ld->setText(Light2);
     if(D2_1 == "0"){ui->d1_2->setChecked(false);}
     if(D2_1 == "1"){ui->d1_2->setChecked(true);}
 

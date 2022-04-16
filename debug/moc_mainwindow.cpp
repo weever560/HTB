@@ -34,21 +34,21 @@ static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 12), // "rece_message"
 QT_MOC_LITERAL(2, 24, 0), // ""
-QT_MOC_LITERAL(3, 25, 5), // "char*"
-QT_MOC_LITERAL(4, 31, 4), // "msg1"
-QT_MOC_LITERAL(5, 36, 13), // "connected_isr"
-QT_MOC_LITERAL(6, 50, 12), // "recv_message"
-QT_MOC_LITERAL(7, 63, 7), // "message"
-QT_MOC_LITERAL(8, 71, 22), // "on_pushButton1_clicked"
-QT_MOC_LITERAL(9, 94, 22), // "on_pushButton2_clicked"
-QT_MOC_LITERAL(10, 117, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(11, 139, 12) // "send_message"
+QT_MOC_LITERAL(3, 25, 13), // "connected_isr"
+QT_MOC_LITERAL(4, 39, 12), // "recv_message"
+QT_MOC_LITERAL(5, 52, 7), // "message"
+QT_MOC_LITERAL(6, 60, 22), // "on_pushButton1_clicked"
+QT_MOC_LITERAL(7, 83, 22), // "on_pushButton2_clicked"
+QT_MOC_LITERAL(8, 106, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(9, 128, 12), // "send_message"
+QT_MOC_LITERAL(10, 141, 5), // "char*"
+QT_MOC_LITERAL(11, 147, 4) // "msg1"
 
     },
-    "MainWindow\0rece_message\0\0char*\0msg1\0"
-    "connected_isr\0recv_message\0message\0"
-    "on_pushButton1_clicked\0on_pushButton2_clicked\0"
-    "on_pushButton_clicked\0send_message"
+    "MainWindow\0rece_message\0\0connected_isr\0"
+    "recv_message\0message\0on_pushButton1_clicked\0"
+    "on_pushButton2_clicked\0on_pushButton_clicked\0"
+    "send_message\0char*\0msg1"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,26 +66,26 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
+       1,    0,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   52,    2, 0x09 /* Protected */,
-       6,    1,   53,    2, 0x08 /* Private */,
+       3,    0,   50,    2, 0x09 /* Protected */,
+       4,    1,   51,    2, 0x08 /* Private */,
+       6,    0,   54,    2, 0x08 /* Private */,
+       7,    0,   55,    2, 0x08 /* Private */,
        8,    0,   56,    2, 0x08 /* Private */,
-       9,    0,   57,    2, 0x08 /* Private */,
-      10,    0,   58,    2, 0x08 /* Private */,
-      11,    1,   59,    2, 0x08 /* Private */,
+       9,    1,   57,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QByteArray,    7,
+    QMetaType::Void, QMetaType::QByteArray,    5,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 10,   11,
 
        0        // eod
 };
@@ -96,7 +96,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->rece_message((*reinterpret_cast< char*(*)>(_a[1]))); break;
+        case 0: _t->rece_message(); break;
         case 1: _t->connected_isr(); break;
         case 2: _t->recv_message((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         case 3: _t->on_pushButton1_clicked(); break;
@@ -108,7 +108,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (MainWindow::*)(char * );
+            using _t = void (MainWindow::*)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MainWindow::rece_message)) {
                 *result = 0;
                 return;
@@ -158,10 +158,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void MainWindow::rece_message(char * _t1)
+void MainWindow::rece_message()
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

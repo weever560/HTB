@@ -17,7 +17,8 @@ signals:
 public:
     explicit class1(QWidget *parent = nullptr);
     ~class1();
-    QMqttClient *client;
+    QMqttClient *client1;
+    void startshow();
 
 private slots:
     void recv_message(QByteArray message);//接收消息回调
@@ -41,7 +42,7 @@ private slots:
 
     void on_kt_stateChanged(int arg1);
 
-    void stateupdata1(char * msg);
+    void stateupdata1();
 
 private:
     Ui::class1 *ui;

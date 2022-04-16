@@ -85,17 +85,10 @@ MainWindow::MainWindow(QWidget *parent)
                         this,&MainWindow::connected_isr);
         connect(client,&QMqttClient::messageReceived,
                         this,&MainWindow::recv_message);
-        connect(this,SIGNAL(rece_message(char * )),
-                    Class1,SLOT(stateupdata1(char * )));
-        connect(this,SIGNAL(rece_message(char * )),
-                    Class2,SLOT(stateupdata2(char * )));
-
-/*test
-        char str[40];
-        sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
-                    HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
-                    FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-        ui->textBrowser1_ld->setText(str);  */
+        connect(this,SIGNAL(rece_message()),
+                    Class1,SLOT(stateupdata1()));
+        connect(this,SIGNAL(rece_message()),
+                    Class2,SLOT(stateupdata2()));
 
 
         //发送
@@ -121,23 +114,27 @@ void MainWindow::connected_isr()
     client->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
 }
            //#1    #26 #41 #277.50  #11    #1111 #1  #"
-//收到消息回调 #课室号#温度#湿度#亮度（6）#风扇12#灯1234#空调#卡号（8）
+//收到消息回调 #课室号#温度#湿度#亮度（6）#风扇12#灯1234#空调#卡号（8）#
            //0     2   5   8        15    18     23  25
 void MainWindow::recv_message(QByteArray message)
 {
     int num = 0 ;   //记录#的多少，相对应数据含义
     QString class_no="0";
     QString temp1="0",temp2="0";//亮度整数
+    int temp[10]={0};
+    int locat,length;
 
 
     qDebug()<<"接收信息:"<<message<<endl;
 
     for( int i = 0 ; i < message.size()  ; i++  )
     {
-        ui->textBrowser3_rs->setText(message);
         if( message[i] == '#' )
         {
             num++;
+            temp[num] = i;
+            locat = temp[num-1]+1;
+            length = temp[num]-temp[num-1]-1;
 
         }
         else
@@ -145,108 +142,109 @@ void MainWindow::recv_message(QByteArray message)
         //读取数据
         switch(num)
             {
-            case 1:     //课室号,只能实现一位
+            case 1:break;
+            case 2:     //课室号,只能实现一位
                 {
-                    class_no = message.mid(1,1);
+                    class_no = message.mid(locat,length);
                 }break;
 
-            case 2:     //温度
+            case 3:     //温度
                 {
                     if(class_no == '1')
                     {
-                        Temp1 = message.mid(3,2);
+                        Temp1 = message.mid(locat,length);
                     }
                     else if(class_no == '2')
                     {
-                        Temp2 = message.mid(3,2);
+                        Temp2 = message.mid(locat,length);
                     }
                     ui->textBrowser1_wd->setText(Temp1);
                     ui->textBrowser2_wd->setText(Temp2);
                 }break;
 
-            case 3:     //湿度
+            case 4:     //湿度
                 {
                     if(class_no == '1')
                      {
-                        Humi1 = message.mid(6,2);
+                        Humi1 = message.mid(locat,length);
                     }
                     else if(class_no == '2')
                     {
-                        Humi2 = message.mid(6,2);
+                        Humi2 = message.mid(locat,length);
                     }
                     ui->textBrowser1_sd->setText(Humi1);
                     ui->textBrowser2_sd->setText(Humi2);
                 }break;
 
-            case 4:     //亮度
+            case 5:     //亮度
                 {
                    if(class_no == '1')
                     {
-                        Light1 = message.mid(9,6);
-                        temp1 = message.mid(9,3);   //由于总控ui设计能力有限，只能读三位
+                        Light1 = message.mid(locat,length);
+                        temp1 = message.mid(locat,length);   //由于总控ui设计能力有限，只能读三位
                     }
                   else if(class_no == '2')
                     {
-                        Light2 = message.mid(9,6);
-                        temp2 = message.mid(9,3);
+                        Light2 = message.mid(locat,length);
+                        temp2 = message.mid(locat,length);
                     }
                    ui->textBrowser1_ld->setText(temp1);
                    ui->textBrowser2_ld->setText(temp2);
                 }break;
 
-            case 5:     //风扇
+            case 6:     //风扇
                 {
                     if(class_no == '1')
                     {
-                        FS1_1 = message.mid(16,1);
-                        FS1_2 = message.mid(17,1);
+                        FS1_1 = message.mid(locat,1);
+                        FS1_2 = message.mid(locat+1,1);
                     }
                     else if(class_no == '2')
                     {
-                        FS2_1 = message.mid(16,1);
-                        FS2_2 = message.mid(17,1);
+                        FS2_1 = message.mid(locat,1);
+                        FS2_2 = message.mid(locat+1,1);
                     }
                 }break;
 
-            case 6:     //灯光
+            case 7:     //灯光
                 {
                     if(class_no == '1')
                     {
-                        D1_1 = message.mid(19,1);
-                        D1_2 = message.mid(20,1);
-                        D1_3 = message.mid(21,1);
-                        D1_4 = message.mid(22,1);
+                        D1_1 = message.mid(locat,1);
+                        D1_2 = message.mid(locat+1,1);
+                        D1_3 = message.mid(locat+2,1);
+                        D1_4 = message.mid(locat+3,1);
                     }
                     else if(class_no == '2')
                     {
-                        D2_1 = message.mid(19,1);
-                        D2_2 = message.mid(20,1);
-                        D2_3 = message.mid(21,1);
-                        D2_4 = message.mid(22,1);
+                        D2_1 = message.mid(locat,1);
+                        D2_2 = message.mid(locat+1,1);
+                        D2_3 = message.mid(locat+2,1);
+                        D2_4 = message.mid(locat+3,1);
                     }
                 }break;
 
-            case 7:     //空调
+            case 8:     //空调
                 {
                     if(class_no == '1')
                     {
-                        KT1 = message.mid(24,1);
+                        KT1 = message.mid(locat,1);
                     }
                     else if(class_no == '2')
                     {
-                        KT2 = message.mid(24,1);
+                        KT2 = message.mid(locat,1);
                     }
                 }break;
 
-            case 8:     //卡号
+            case 9:     //卡号
                 {
                     if(class_no == '1')
                     {
-                        Card_ID1 = message.mid(26,8);
+                        Card_ID1 = message.mid(locat,8);
                     }
                     else if(class_no == '2')
                     {
-                        Card_ID2 = message.mid(26,8);
+                        Card_ID2 = message.mid(locat,8);
                     }
                 }break;
 
@@ -257,27 +255,20 @@ void MainWindow::recv_message(QByteArray message)
 
     }
 
-    char str[40];
-    sprintf(str,"$#1#%d#%d#%d#%d%d%d%d#%d%d#%d$",
-                HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
-                FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    emit rece_message(str);
+    emit rece_message();
 
 }
-
+//$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
 void MainWindow::send_message(char * msg1)
 {
     QString payload= msg1;//消息内容体
     client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit());//发布消息
-    for(int i =0 ; i<100;i++)
-    {}
-    client->publish(QMqttTopicName("LK58090NWK/QT/event"),payload.toLocal8Bit());//发布消息
+
     qDebug()<<"发送成功"<<endl;
 }
 
 void MainWindow::on_pushButton1_clicked()
 {
-
     Class1->show();
 }
 

@@ -80,15 +80,15 @@ static const uint qt_meta_data_class2[] = {
  // slots: name, argc, parameters, tag, flags
        5,    1,   77,    2, 0x08 /* Private */,
        7,    0,   80,    2, 0x08 /* Private */,
-       8,    1,   81,    2, 0x08 /* Private */,
-       9,    1,   84,    2, 0x08 /* Private */,
-      11,    1,   87,    2, 0x08 /* Private */,
-      12,    1,   90,    2, 0x08 /* Private */,
-      13,    1,   93,    2, 0x08 /* Private */,
-      14,    1,   96,    2, 0x08 /* Private */,
-      15,    1,   99,    2, 0x08 /* Private */,
-      16,    1,  102,    2, 0x08 /* Private */,
-      17,    1,  105,    2, 0x08 /* Private */,
+       8,    0,   81,    2, 0x08 /* Private */,
+       9,    1,   82,    2, 0x08 /* Private */,
+      11,    1,   85,    2, 0x08 /* Private */,
+      12,    1,   88,    2, 0x08 /* Private */,
+      13,    1,   91,    2, 0x08 /* Private */,
+      14,    1,   94,    2, 0x08 /* Private */,
+      15,    1,   97,    2, 0x08 /* Private */,
+      16,    1,  100,    2, 0x08 /* Private */,
+      17,    1,  103,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -96,7 +96,7 @@ static const uint qt_meta_data_class2[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::QByteArray,    6,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void, QMetaType::Int,   10,
@@ -118,7 +118,7 @@ void class2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 0: _t->message_send2((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 1: _t->recv_message((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         case 2: _t->connected_isr(); break;
-        case 3: _t->stateupdata2((*reinterpret_cast< char*(*)>(_a[1]))); break;
+        case 3: _t->stateupdata2(); break;
         case 4: _t->on_checkBox2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->on_d1_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->on_d2_2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;

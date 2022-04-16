@@ -20,7 +20,7 @@ protected:
      QMqttClient *client;//mqtt服务器对象
 
 signals:
-    void rece_message(char * msg1);
+    void rece_message(void);
 protected slots:
     void connected_isr();//连接回调函数
 private slots:

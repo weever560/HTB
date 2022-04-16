@@ -15,7 +15,8 @@ class class2 : public QWidget
 public:
     explicit class2(QWidget *parent = nullptr);
     ~class2();
-    QMqttClient *client;
+    QMqttClient *client2;
+    void startshow2();
 
 signals:
     void message_send2(char * msg);
@@ -24,7 +25,7 @@ private slots:
     void connected_isr();//连接回调函数
 
 
-    void stateupdata2(char * msg);
+    void stateupdata2();
 
     void on_checkBox2_stateChanged(int arg1);
 

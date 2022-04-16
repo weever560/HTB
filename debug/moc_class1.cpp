@@ -90,7 +90,7 @@ static const uint qt_meta_data_class1[] = {
       15,    1,  102,    2, 0x08 /* Private */,
       16,    1,  105,    2, 0x08 /* Private */,
       17,    1,  108,    2, 0x08 /* Private */,
-      18,    1,  111,    2, 0x08 /* Private */,
+      18,    0,  111,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -107,7 +107,7 @@ static const uint qt_meta_data_class1[] = {
     QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -130,7 +130,7 @@ void class1::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 9: _t->on_fs1_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->on_fs2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 11: _t->on_kt_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->stateupdata1((*reinterpret_cast< char*(*)>(_a[1]))); break;
+        case 12: _t->stateupdata1(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

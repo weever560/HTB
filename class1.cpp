@@ -11,7 +11,7 @@ extern QString Temp1,Humi1,Light1;//温度、湿度、亮度
 extern QString FS1_1,FS1_2,D1_1,D1_2,D1_3,D1_4;//风扇和灯
 extern QString KT1;     //空调
 extern QString Card_ID1;//最后处理过的卡号字符串
-int HumanNum1=12;//人数
+int HumanNum1=35;//人数
 
 extern QByteArray input[255];
 //创建串口对象
@@ -54,6 +54,7 @@ class1::class1(QWidget *parent) :
     setPalette(pal);
     this->setFixedSize(450,470);   //禁止拉伸
 
+
 }
 
 class1::~class1()
@@ -61,12 +62,36 @@ class1::~class1()
     delete ui;
 }
 
+void class1::startshow()
+{
+    this->show();
+    //***********登录腾讯云物联网通信必要设置******************
+    QByteArray password = "355d5fa9996e10b9f1a5e2dea0744a1b9998ce12314a58a8a20f17dfc818a767;hmacsha256";//填写密码
+    quint16 port = 1883;
+    client1=new QMqttClient(this);
+
+
+        client1->setKeepAlive(120);
+        client1->setHostname("106.55.124.154");//设置服务器IP
+        client1->setPort(port);//设置服务器端口号
+        client1->setClientId("LK58090NWKQT");//cliendID
+        //client->setClientId("DXNET9YB6G222");//cliendID
+        //client->setUsername("DXNET9YB6G222;12010126;95MMP;1681061987");//userID
+        client1->setUsername("LK58090NWKQT;12010126;XLG53;1682060330");
+        //client->setPassword(password);//设置一个客户端密码
+        client1->setPassword("ca89acab96acec59082f7142414aa96bfac14f6dba275cabb15cda8e58fc0cbd;hmacsha256");//设置一个客户端密码
+        client1->cleanSession();//清除缓存
+       // client->setVersion(QMQTT::MQTTVersion::V3_1_1);//设置mqtt版
+        client1->connectToHost();//连接服务器
+        connect(client1,&QMqttClient::connected,
+                        this,&class1::connected_isr);
+}
+
 //成功连接回调
 void class1::connected_isr()
 {
-
-    client->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
-    qDebug()<<"Connected 1!";
+    client1->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
+    qDebug()<<"Connected class1!";
 }
 
 //收到消息回调
@@ -137,8 +162,9 @@ void class1::on_checkBox_stateChanged(int arg1)
         ui->kt->setDisabled(false);
     }
 
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -153,8 +179,10 @@ void class1::on_d1_stateChanged(int arg1)
     case 1:{D1_1="0";}break;
     case 0:{D1_1="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    HumanNum1 ++;
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -168,8 +196,9 @@ void class1::on_d2_stateChanged(int arg1)
     case 1:{D1_2="0";}break;
     case 0:{D1_2="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -183,8 +212,9 @@ void class1::on_d3_stateChanged(int arg1)
     case 1:{D1_3="0";}break;
     case 0:{D1_3="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -198,8 +228,9 @@ void class1::on_d4_stateChanged(int arg1)
     case 1:{D1_4="0";}break;
     case 0:{D1_4="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -213,8 +244,9 @@ void class1::on_fs1_stateChanged(int arg1)
     case 1:{FS1_1="0";}break;
     case 0:{FS1_1="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -228,8 +260,9 @@ void class1::on_fs2_stateChanged(int arg1)
     case 1:{FS1_2="0";}break;
     case 0:{FS1_2="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
@@ -243,17 +276,22 @@ void class1::on_kt_stateChanged(int arg1)
     case 1:{KT1="0";}break;
     case 0:{KT1="1";}break;
     }
+    //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    sprintf(str,"$#1#%d#%d#%d%d%d%d#%d%d#%d$",
+    sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
     ui->textBrowser1_ld->setText(str);
     emit message_send(str);
 }
 
-void class1::stateupdata1(char *msg)
+void class1::stateupdata1()
 {
     ui->checkBox_2->setChecked(true);
+    ui->textBrowser1_rs->setText(QString::number(HumanNum1));
+    ui->textBrowser1_wd->setText(Temp1);
+    ui->textBrowser1_sd->setText(Humi1);
+    ui->textBrowser1_ld->setText(Light1);
     if(D1_1 == "0"){ui->d1->setChecked(false);}
     if(D1_1 == "1"){ui->d1->setChecked(true);}
 

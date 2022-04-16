@@ -1,6 +1,8 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include "mainwindow.h"
+#include "class1.h"
+#include "class2.h"
 
 int i = 3;  //三次登录机会
 
@@ -88,17 +90,18 @@ void Widget::client_login_handler(QString res)
     if(res == "login_success")
     {
         QMessageBox::information(this,"登录提示","分控登录成功");
-        mainwindow = new MainWindow(this);
+
+        Class1 = new class1();  //分控
+        close();
+        Class1->startshow();
+    }
+    else if(res == "login_main_success")
+    {
+        QMessageBox::information(this,"登录提示","总控登录成功");
+        mainwindow = new MainWindow();
         close();
         mainwindow->show();
     }
-/*    else if(res == "login_main_success")
-    {
-        QMessageBox::information(this,"登录提示","总控登录成功");
-        mainwindow = new MainWindow(this);
-        close();
-        mainwindow->show();
-    }*/
     else if (res == "user_not_exist")
     {
         if(i == 0)

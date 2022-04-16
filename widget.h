@@ -33,7 +33,8 @@ private:
     Ui::Widget *ui;
     QTcpSocket *socket;
     MainWindow *mainwindow;//添加总控私有成员
-    class1 * Class1;//添加分控私有成员
+    class1 * Class1;//添加私有成员
+    class2 * Class2;//添加私有成员
 
     void client_register_handler(QString res);
     void client_login_handler(QString res);
