@@ -14,6 +14,7 @@ class class1 : public QWidget
 signals:
     void message_send(char * msg);  //（总控）跟总部发送信号告诉他发送信息
     void message_rece();            //（分控）自己接受mqtt信息后改变状态
+    void shijue();                  //视觉
 
 public:
     explicit class1(QWidget *parent = nullptr);
@@ -47,10 +48,12 @@ private slots:
 
     void send_message1(char * );    //分控，发送信息
 
+    void on_pushButton_clicked();
+
 private:
     Ui::class1 *ui;
     void readyReadData();
-
+    void readyReadData2();
 };
 
 #endif // CLASS1_H

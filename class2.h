@@ -21,6 +21,7 @@ public:
 signals:
     void message_send2(char * msg);
     void message_rece2();
+    void shijue2();                  //视觉
 
 private slots:
     void recv_message(QByteArray message);//接收消息回调

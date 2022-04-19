@@ -23,8 +23,8 @@ Widget::Widget(QWidget *parent)
 
 
     socket = new QTcpSocket;
-    socket->connectToHost(QHostAddress("47.113.203.27"),80);//服务器公网地址
-
+    //socket->connectToHost(QHostAddress("47.113.203.27"),80);//服务器公网地址
+    socket->connectToHost(QHostAddress("192.168.109.131"),80);//服务器公网地址
 
     connect(socket,&QTcpSocket::connected,this,&Widget::connect_success);
     connect(socket,&QTcpSocket::readyRead,this,&Widget::server_reply);

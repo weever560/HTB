@@ -9,6 +9,7 @@
 #include <QSerialPort>        //提供访问串口的功能
 #include <QSerialPortInfo>    //提供系统中存在的串口的信息
 
+
 //全局变量定义
 QString Temp1="0",Humi1="0",Light1="0";//温度、湿度、亮度
 QString FS1_1="0",FS1_2="0",D1_1="0",D1_2="0",D1_3="0",D1_4="0";//风扇和灯
@@ -97,6 +98,12 @@ MainWindow::MainWindow(QWidget *parent)
         connect(Class2,SIGNAL(message_send2(char * )),
                     this,SLOT(send_message(char * )));
 
+        //视觉
+        connect(Class1,SIGNAL(shijue()),
+                    this,SLOT(changeshijue()));
+        connect(Class2,SIGNAL(shijue2()),
+                    this,SLOT(changeshijue()));
+
 
 
 
@@ -104,6 +111,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::changeshijue()
+{
+    ui->textBrowser1_rs->setText(QString::number(HumanNum1));
+    ui->textBrowser2_rs->setText(QString::number(HumanNum2));
 }
 
 //成功连接回调

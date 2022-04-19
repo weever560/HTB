@@ -8,11 +8,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-  //  Widget w;
-  //  w.show();
+    //Widget w;
+    //w.show();
     //成品记得注释下面的
-    // MainWindow q;
-    //   q.show();
+     //MainWindow q;
+     //q.show();
        class2 e;
        e.startshow2();
 

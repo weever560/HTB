@@ -1,4 +1,4 @@
-QT       += core gui network serialport
+QT       += core gui network serialport multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,4 +41,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     img.qrc
+
+DISTFILES += \
+    rlsb.py
+
 

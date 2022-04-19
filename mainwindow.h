@@ -33,6 +33,8 @@ private slots:
 
     void send_message(char * msg1);    //收到分控改变信号向服务器发送信息
 
+    void changeshijue();
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

@@ -27,7 +27,6 @@ class2::class2(QWidget *parent) :
     this->setWindowIcon(QIcon("E:/qtdemo/HTB/icon/info.png"));  //图案
     this->setWindowTitle("智能教室登陆系统");
 
-    //**********摄像头串口通讯***********
     //设置串口名COM2
     serial2.setPortName("COM2");
     //设置波特率115200
@@ -54,7 +53,6 @@ class2::class2(QWidget *parent) :
     pal.setBrush(backgroundRole(), QPixmap("E:/qtdemo/HTB/background/info3.jpg"));
     setPalette(pal);
     this->setFixedSize(450,470);   //禁止拉伸
-
 
 }
 
@@ -266,15 +264,7 @@ void class2::readyReadData()
     // 从接收缓冲区中读取串口数据
     QByteArray buffer = serial2.readAll();
     //测试格式  视觉人数处理
-    qDebug()<<"---教室2视觉人数处理---";
-    for (int i = 0; i < 255 ;i++ ) {
-        if(buffer == input[i])
-        {
-            HumanNum2 = i+1;//人数
-            ui->textBrowser1_rs->setText(QString::number(i+1));
-            qDebug() << "识别人数：" << i+1 <<endl;
-        }
-    }
+    qDebug()<<buffer<<endl;
     qDebug()<<"===识别end==="<<endl;
 }
 
@@ -320,7 +310,7 @@ void class2::on_checkBox2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -331,13 +321,13 @@ void class2::on_d1_2_clicked()
     case 1:{D2_1="0";}break;
     case 0:{D2_1="1";}break;
     }
-    HumanNum2++;
+
     //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -353,7 +343,7 @@ void class2::on_d2_2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -369,7 +359,7 @@ void class2::on_d3_2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -385,7 +375,7 @@ void class2::on_d4_2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -401,7 +391,7 @@ void class2::on_fs1_2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -417,7 +407,7 @@ void class2::on_fs2_2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 
@@ -433,7 +423,7 @@ void class2::on_kt2_clicked()
     sprintf(str,"$#2#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum2,mode2,D2_1.toInt(),D2_2.toInt(),D2_3.toInt(),D2_4.toInt(),
                 FS2_1.toInt(),FS2_2.toInt(),KT2.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send2(str);
 }
 

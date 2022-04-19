@@ -249,6 +249,7 @@ Makefile: HTB.pro ../../Qt/Qt5.12.10/5.12.10/mingw73_64/mkspecs/win32-g++/qmake.
 		../../Qt/Qt5.12.10/5.12.10/mingw73_64/mkspecs/features/lex.prf \
 		HTB.pro \
 		lib/Qt5Mqttd.prl \
+		../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Multimedia.prl \
 		../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Widgets.prl \
 		../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Gui.prl \
 		../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Network.prl \
@@ -442,6 +443,7 @@ Makefile: HTB.pro ../../Qt/Qt5.12.10/5.12.10/mingw73_64/mkspecs/win32-g++/qmake.
 ../../Qt/Qt5.12.10/5.12.10/mingw73_64/mkspecs/features/lex.prf:
 HTB.pro:
 lib/Qt5Mqttd.prl:
+../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Multimedia.prl:
 ../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Widgets.prl:
 ../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Gui.prl:
 ../../Qt/Qt5.12.10/5.12.10/mingw73_64/lib/Qt5Network.prl:

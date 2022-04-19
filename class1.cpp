@@ -4,6 +4,9 @@
 #include "mainwindow.h"
 #include <QSerialPort>        //提供访问串口的功能
 #include <QSerialPortInfo>    //提供系统中存在的串口的信息
+#include <QFile>              //进行文件操作
+#include <QMediaPlayer>
+#include <QProcess>
 
 //全局变量定义
 int mode1=1;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
@@ -94,6 +97,8 @@ void class1::startshow()
 
         connect(this,SIGNAL(message_send(char * )),
                     this,SLOT(send_message1(char * )));
+
+
 }
 
 //成功连接回调
@@ -274,7 +279,18 @@ void class1::readyReadData()
             qDebug() << "识别人数：" << i+1 <<endl;
         }
     }
+
+    if(HumanNum1<=10)
+    {
+        QMediaPlayer *player = new QMediaPlayer;
+        //播放进度的信号提示
+        connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+        player->setMedia(QUrl::fromLocalFile("E:\\qtdemo\\HTB\\sound\\人少.mp3"));
+        player->setVolume(50); //0~100音量范围,默认是100
+        player->play();
+    }
     qDebug()<<"===识别end==="<<endl;
+    emit shijue();
 }
 
 void class1::on_radioButton_clicked()
@@ -324,7 +340,7 @@ void class1::on_checkBox_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 
 }
@@ -338,11 +354,11 @@ void class1::on_d1_clicked()
     }
     //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
     char str[40];
-    HumanNum1 ++;//测试用，记得删除！！！
+
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -358,7 +374,7 @@ void class1::on_d2_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -374,7 +390,7 @@ void class1::on_d3_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -390,7 +406,7 @@ void class1::on_d4_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -406,7 +422,7 @@ void class1::on_fs1_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -422,7 +438,7 @@ void class1::on_fs2_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -438,7 +454,7 @@ void class1::on_kt_clicked()
     sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
                 HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
                 FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
-    ui->textBrowser1_ld->setText(str);
+
     emit message_send(str);
 }
 
@@ -470,5 +486,23 @@ void class1::stateupdata1()
     if(KT1 == "0"){ui->kt->setChecked(false);}
     if(KT1 == "1"){ui->kt->setChecked(true);}
 
+    //创建对象并绑定到对应文件
+    QString filepath = "E:\\qtdemo\\HTB\\text\\签到表.txt";
+    QFile file(filepath);
+    //设定文件的打开方式
+
+    //向文件中写入内容
+    //file.open(QIODevice::Append | QIODevice::Text);
+    //char str[20];
+    //sprintf(str,"学生%d：%s \n");
+    //file.write(str);
+
     qDebug()<<"刷新成功"<<endl;
+}
+
+void class1::on_pushButton_clicked()
+{
+    QProcess *txt = new QProcess;
+    txt->execute("explorer E:\\qtdemo\\HTB\\text\\签到表.txt");
+    qDebug()<<"打开成功!";
 }
