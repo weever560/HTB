@@ -13,6 +13,7 @@ UI_DIR=./UI
 SOURCES += \
     class1.cpp \
     class2.cpp \
+    control.cpp \
     main.cpp \
     mainwindow.cpp \
     widget.cpp
@@ -20,12 +21,14 @@ SOURCES += \
 HEADERS += \
     class1.h \
     class2.h \
+    control.h \
     mainwindow.h \
     widget.h
 
 FORMS += \
     class1.ui \
     class2.ui \
+    control.ui \
     mainwindow.ui \
     widget.ui
 

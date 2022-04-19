@@ -20,7 +20,7 @@ public:
     explicit class1(QWidget *parent = nullptr);
     ~class1();
     QMqttClient *client1;
-    void startshow();
+    void startshow();               //分控单独开启mqtt
 
 private slots:
     void recv_message(QByteArray message);//接收消息回调

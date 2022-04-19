@@ -7,6 +7,8 @@
 #include <QFile>              //进行文件操作
 #include <QMediaPlayer>
 #include <QProcess>
+#include "control.h"
+
 
 //全局变量定义
 int mode1=1;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
@@ -15,7 +17,10 @@ extern QString FS1_1,FS1_2,D1_1,D1_2,D1_3,D1_4;//风扇和灯
 extern QString KT1;     //空调
 extern QString Card_ID1;//最后处理过的卡号字符串
 int HumanNum1=0;//人数
+extern int HumanNum2;
 extern QByteArray input[255];
+QString students[10]={"刘骏帆","卢宇杭"};
+int qiandao=1;//签到序号
 //创建串口对象
 QSerialPort serial;
 
@@ -27,6 +32,7 @@ class1::class1(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowIcon(QIcon("E:/qtdemo/HTB/icon/info.png"));  //图案
     this->setWindowTitle("智能教室登陆系统");
+
 
     //**********摄像头串口通讯***********
     //设置串口名COM2
@@ -57,6 +63,7 @@ class1::class1(QWidget *parent) :
     this->setFixedSize(450,470);   //禁止拉伸
 
 
+
 }
 
 class1::~class1()
@@ -67,6 +74,8 @@ class1::~class1()
 void class1::startshow()
 {
     this->show();
+    control *q = new control();
+    q->show();
     //***********登录腾讯云物联网通信必要设置******************
     QByteArray password = "355d5fa9996e10b9f1a5e2dea0744a1b9998ce12314a58a8a20f17dfc818a767;hmacsha256";//填写密码
     quint16 port = 1883;
@@ -97,6 +106,7 @@ void class1::startshow()
 
         connect(this,SIGNAL(message_send(char * )),
                     this,SLOT(send_message1(char * )));
+        connect(q,SIGNAL(huchange()),this,SLOT(stateupdata1()));
 
 
 }
@@ -259,6 +269,7 @@ void class1::recv_message(QByteArray message)
              }
         }
 
+
     }
     emit message_rece();
 }
@@ -280,7 +291,9 @@ void class1::readyReadData()
         }
     }
 
-    if(HumanNum1<=10)
+    //如果课室2也没人，1正常开。
+    //2的人数大于1且1少人。1劝退
+    if(HumanNum1<10 && HumanNum2 >= HumanNum1)
     {
         QMediaPlayer *player = new QMediaPlayer;
         //播放进度的信号提示
@@ -486,17 +499,18 @@ void class1::stateupdata1()
     if(KT1 == "0"){ui->kt->setChecked(false);}
     if(KT1 == "1"){ui->kt->setChecked(true);}
 
-    //创建对象并绑定到对应文件
+    if(Card_ID1 != "00000001")
+    {//创建对象并绑定到对应文件
     QString filepath = "E:\\qtdemo\\HTB\\text\\签到表.txt";
     QFile file(filepath);
     //设定文件的打开方式
 
     //向文件中写入内容
-    //file.open(QIODevice::Append | QIODevice::Text);
-    //char str[20];
-    //sprintf(str,"学生%d：%s \n");
-    //file.write(str);
-
+    file.open(QIODevice::Append | QIODevice::Text);
+    char str[20];
+    sprintf(str,"学生%d：刘骏帆 \n",qiandao);
+    file.write(str);
+    }
     qDebug()<<"刷新成功"<<endl;
 }
 

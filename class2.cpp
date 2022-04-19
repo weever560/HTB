@@ -12,7 +12,7 @@ extern QString FS2_1,FS2_2,D2_1,D2_2,D2_3,D2_4;//风扇和灯
 extern QString KT2;     //空调
 extern QString Card_ID2;//最后处理过的卡号字符串
 int HumanNum2=0;//人数
-
+int qiandao2=1;//签到序号
 extern char Report2[255];//串口发送给上位机的字符数组
 extern QByteArray input[255];
 //创建串口对象

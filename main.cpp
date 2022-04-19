@@ -2,7 +2,7 @@
 #include "widget.h"
 #include "class1.h"
 #include "class2.h"
-
+#include "control.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -13,8 +13,10 @@ int main(int argc, char *argv[])
     //成品记得注释下面的
      //MainWindow q;
      //q.show();
-       class2 e;
-       e.startshow2();
+       class1 e;
+       e.startshow();
+
+
 
     return a.exec();
 }
