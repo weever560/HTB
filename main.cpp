@@ -13,8 +13,10 @@ int main(int argc, char *argv[])
     //成品记得注释下面的
      //MainWindow q;
      //q.show();
-       class1 e;
-       e.startshow();
+     class1 e;
+     e.startshow();
+    //control z;
+    //z.show();
 
 
 

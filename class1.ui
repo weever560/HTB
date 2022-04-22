@@ -104,7 +104,7 @@
      <x>40</x>
      <y>140</y>
      <width>362</width>
-     <height>111</height>
+     <height>231</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -273,7 +273,7 @@
        </font>
       </property>
       <property name="text">
-       <string>自动模式</string>
+       <string>手动模式</string>
       </property>
      </widget>
     </item>

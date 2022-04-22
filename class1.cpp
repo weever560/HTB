@@ -11,7 +11,7 @@
 
 
 //全局变量定义
-int mode1=1;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
+int mode1=0;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
 extern QString Temp1,Humi1,Light1;//温度、湿度、亮度
 extern QString FS1_1,FS1_2,D1_1,D1_2,D1_3,D1_4;//风扇和灯
 extern QString KT1;     //空调
@@ -19,8 +19,12 @@ extern QString Card_ID1;//最后处理过的卡号字符串
 int HumanNum1=0;//人数
 extern int HumanNum2;
 extern QByteArray input[255];
-QString students[10]={"刘骏帆","卢宇杭"};
+QString students[10]={"刘骏帆","谢海钰","卢宇杭"};
 int qiandao=1;//签到序号
+int flag=0;   //劝退标志位
+int flag1[10]={0};
+int flag2=0;      //摄像头发送
+
 //创建串口对象
 QSerialPort serial;
 
@@ -62,7 +66,7 @@ class1::class1(QWidget *parent) :
     setPalette(pal);
     this->setFixedSize(450,470);   //禁止拉伸
 
-
+    ui->checkBox->setText("手动模式");
 
 }
 
@@ -108,6 +112,13 @@ void class1::startshow()
                     this,SLOT(send_message1(char * )));
         connect(q,SIGNAL(huchange()),this,SLOT(stateupdata1()));
 
+        ui->d1->setDisabled(true);
+        ui->d2->setDisabled(true);
+        ui->d3->setDisabled(true);
+        ui->d4->setDisabled(true);
+        ui->fs1->setDisabled(true);
+        ui->fs2->setDisabled(true);
+        ui->kt->setDisabled(true);
 
 }
 
@@ -257,6 +268,7 @@ void class1::recv_message(QByteArray message)
                     if(class_no == '1')
                     {
                         Card_ID1 = message.mid(locat,8);
+                        qDebug()<<"card.id"<<Card_ID1;//debug
                     }
                     else if(class_no == '2')
                     {
@@ -281,29 +293,34 @@ void class1::readyReadData()
     // 从接收缓冲区中读取串口数据
     QByteArray buffer = serial.readAll();
     //测试格式  视觉人数处理
-    qDebug()<<"---教室1视觉人数处理---";
+
     for (int i = 0; i < 255 ;i++ ) {
         if(buffer == input[i])
         {
             HumanNum1 = i+1;//人数
             ui->textBrowser1_rs->setText(QString::number(i+1));
-            qDebug() << "识别人数：" << i+1 <<endl;
+
         }
     }
 
-    //如果课室2也没人，1正常开。
-    //2的人数大于1且1少人。1劝退
-    if(HumanNum1<10 && HumanNum2 >= HumanNum1)
-    {
-        QMediaPlayer *player = new QMediaPlayer;
-        //播放进度的信号提示
-        connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-        player->setMedia(QUrl::fromLocalFile("E:\\qtdemo\\HTB\\sound\\人少.mp3"));
-        player->setVolume(50); //0~100音量范围,默认是100
-        player->play();
-    }
-    qDebug()<<"===识别end==="<<endl;
     emit shijue();
+
+    flag2++;
+    if(flag2 >=5)
+    {
+        qDebug()<<"---教室1视觉人数处理---";
+        qDebug() << "识别人数：" << HumanNum1 <<endl;
+        flag2=0;
+        //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
+        char str[40];
+        sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
+                    HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
+                    FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
+
+        emit message_send(str);
+    }
+
+
 }
 
 void class1::on_radioButton_clicked()
@@ -478,38 +495,98 @@ void class1::stateupdata1()
     ui->textBrowser1_wd->setText(Temp1);
     ui->textBrowser1_sd->setText(Humi1);
     ui->textBrowser1_ld->setText(Light1);
+
+
     if(D1_1 == "0"){ui->d1->setChecked(false);}
-    if(D1_1 == "1"){ui->d1->setChecked(true);}
+    if(D1_1 != "0"){D1_1="1";ui->d1->setChecked(true);}
 
     if(D1_2 == "0"){ui->d2->setChecked(false);}
-    if(D1_2 == "1"){ui->d2->setChecked(true);}
+    if(D1_2 != "0"){D1_2="1";ui->d2->setChecked(true);}
 
     if(D1_3 == "0"){ui->d3->setChecked(false);}
-    if(D1_3 == "1"){ui->d3->setChecked(true);}
+    if(D1_3 != "0"){D1_3="1";ui->d3->setChecked(true);}
 
     if(D1_4 == "0"){ui->d4->setChecked(false);}
-    if(D1_4 == "1"){ui->d4->setChecked(true);}
+    if(D1_4 != "0"){D1_4="1";ui->d4->setChecked(true);}
 
     if(FS1_1 == "0"){ui->fs1->setChecked(false);}
-    if(FS1_1 == "1"){ui->fs1->setChecked(true);}
+    if(FS1_1 != "0"){FS1_1="1";ui->fs1->setChecked(true);}
 
     if(FS1_2 == "0"){ui->fs2->setChecked(false);}
-    if(FS1_2 == "1"){ui->fs2->setChecked(true);}
+    if(FS1_2 != "0"){FS1_2="1";ui->fs2->setChecked(true);}
 
     if(KT1 == "0"){ui->kt->setChecked(false);}
-    if(KT1 == "1"){ui->kt->setChecked(true);}
+    if(KT1 != "0"){KT1="1";ui->kt->setChecked(true);}
 
-    if(Card_ID1 != "00000001")
-    {//创建对象并绑定到对应文件
+    if(Card_ID1 == "e1eff3cc")  //student1
+    {
+        if(flag1[0]==0){
+        //创建对象并绑定到对应文件
+        QString filepath = "E:\\qtdemo\\HTB\\text\\签到表.txt";
+        QFile file(filepath);
+        //设定文件的打开方式
+        //向文件中写入内容
+        file.open(QIODevice::Append | QIODevice::Text);
+        char str[20];
+        sprintf(str,"学生%d：刘骏帆 \n",qiandao);
+        file.write(str);
+        qiandao++;
+        flag1[0]=1;
+        }
+    }
+    else if(Card_ID1 == "5c8be33f") //student2
+    {
+        if(flag1[1]==0){
+    //创建对象并绑定到对应文件
     QString filepath = "E:\\qtdemo\\HTB\\text\\签到表.txt";
     QFile file(filepath);
     //设定文件的打开方式
-
     //向文件中写入内容
     file.open(QIODevice::Append | QIODevice::Text);
     char str[20];
-    sprintf(str,"学生%d：刘骏帆 \n",qiandao);
+    sprintf(str,"学生%d：谢海钰 \n",qiandao);
     file.write(str);
+    qiandao++;
+    flag1[1]=1;
+        }
+    }
+
+    //如果课室2也没人，1正常开。
+    //2的人数大于1且1少人。1劝退
+    if(HumanNum1<10 && HumanNum2 >= HumanNum1)
+    {
+        if(flag == 0)
+        {
+        QMediaPlayer *player = new QMediaPlayer;
+        //播放进度的信号提示
+        connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+        player->setMedia(QUrl::fromLocalFile("E:\\qtdemo\\HTB\\sound\\人少.mp3"));
+        player->setVolume(50); //0~100音量范围,默认是100
+        player->play();
+
+        //电器全部关闭
+        D1_1 = "0";
+        D1_2 = "0";
+        D1_3 = "0";
+        D1_4 = "0";
+        FS1_1 = "0";
+        FS1_2 = "0";
+        KT1 = "0";
+
+        //$#课室号#电源开关#人数#控制（自动手动）#灯状态（0011）#窗帘#风扇（10）#空调$
+        char str[40];
+        sprintf(str,"$#1#1#%d#%d#%d%d%d%d#1#%d%d#%d$",
+                    HumanNum1,mode1,D1_1.toInt(),D1_2.toInt(),D1_3.toInt(),D1_4.toInt(),
+                    FS1_1.toInt(),FS1_2.toInt(),KT1.toInt());
+        flag = 1 ;
+
+        emit message_send(str);
+        }
+
+    }
+    else if(HumanNum1 >=10) //这里只是考虑课室一的逻辑
+    {
+        flag = 0;
     }
     qDebug()<<"刷新成功"<<endl;
 }

@@ -190,7 +190,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         gridLayoutWidget = new QWidget(class2);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(40, 140, 362, 111));
+        gridLayoutWidget->setGeometry(QRect(40, 140, 362, 231));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -302,7 +302,7 @@ public:
         d2_2->setText(QApplication::translate("class2", "\347\201\2572", nullptr));
         d3_2->setText(QApplication::translate("class2", "\347\201\2573", nullptr));
         d4_2->setText(QApplication::translate("class2", "\347\201\2574", nullptr));
-        checkBox2->setText(QApplication::translate("class2", "\350\207\252\345\212\250\346\250\241\345\274\217", nullptr));
+        checkBox2->setText(QApplication::translate("class2", "\346\211\213\345\212\250\346\250\241\345\274\217", nullptr));
         checkBox2_2->setText(QApplication::translate("class2", "\346\200\273\347\224\265\346\272\220", nullptr));
         label->setText(QApplication::translate("class2", "\346\225\231\345\256\2442", nullptr));
         fs1_2->setText(QApplication::translate("class2", "\351\243\216\346\211\2071", nullptr));

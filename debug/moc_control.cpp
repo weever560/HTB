@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_control_t {
-    QByteArrayData data[4];
-    char stringdata0[40];
+    QByteArrayData data[6];
+    char stringdata0[50];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,10 +34,13 @@ static const qt_meta_stringdata_control_t qt_meta_stringdata_control = {
 QT_MOC_LITERAL(0, 0, 7), // "control"
 QT_MOC_LITERAL(1, 8, 8), // "huchange"
 QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 21) // "on_pushButton_clicked"
+QT_MOC_LITERAL(3, 18, 5), // "char*"
+QT_MOC_LITERAL(4, 24, 3), // "msg"
+QT_MOC_LITERAL(5, 28, 21) // "on_pushButton_clicked"
 
     },
-    "control\0huchange\0\0on_pushButton_clicked"
+    "control\0huchange\0\0char*\0msg\0"
+    "on_pushButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,13 +58,13 @@ static const uint qt_meta_data_control[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   24,    2, 0x06 /* Public */,
+       1,    1,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   25,    2, 0x08 /* Private */,
+       5,    0,   27,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
     QMetaType::Void,
@@ -75,21 +78,20 @@ void control::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         auto *_t = static_cast<control *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->huchange(); break;
+        case 0: _t->huchange((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 1: _t->on_pushButton_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (control::*)();
+            using _t = void (control::*)(char * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&control::huchange)) {
                 *result = 0;
                 return;
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject control::staticMetaObject = { {
@@ -133,9 +135,10 @@ int control::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void control::huchange()
+void control::huchange(char * _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

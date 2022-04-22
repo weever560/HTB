@@ -27,24 +27,6 @@ class2::class2(QWidget *parent) :
     this->setWindowIcon(QIcon("E:/qtdemo/HTB/icon/info.png"));  //图案
     this->setWindowTitle("智能教室登陆系统");
 
-    //设置串口名COM2
-    serial2.setPortName("COM2");
-    //设置波特率115200
-    serial2.setBaudRate(QSerialPort::Baud115200);
-    //设置数据位数8位
-    serial2.setDataBits(QSerialPort::Data8);
-    //设置无奇偶校验
-    serial2.setParity(QSerialPort::NoParity);
-    //设置停止位1位
-    serial2.setStopBits(QSerialPort::OneStop);
-    //设置没有流控制
-    serial2.setFlowControl(QSerialPort::NoFlowControl);
-    //读写方式打开串口
-    serial2.open(QIODevice::ReadWrite);
-    // 连接信号和槽
-    QObject::connect(&serial2,&QSerialPort::readyRead,
-        this,&class2::readyReadData);
-
     this->setWindowIcon(QIcon("E:/qtdemo/HTB/icon/info.png"));  //图案
     this->setWindowTitle("教室2");
     //**********背景***********
@@ -53,7 +35,7 @@ class2::class2(QWidget *parent) :
     pal.setBrush(backgroundRole(), QPixmap("E:/qtdemo/HTB/background/info3.jpg"));
     setPalette(pal);
     this->setFixedSize(450,470);   //禁止拉伸
-
+    ui->checkBox2->setText("手动模式");
 }
 
 class2::~class2()
