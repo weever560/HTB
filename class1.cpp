@@ -262,7 +262,6 @@ void class1::recv_message(QByteArray message)
                     if(class_no == '1')
                     {
                         KT1 = message.mid(locat,1);
-                        qDebug()<<"kt1"<<KT1;//debug
                     }
                     else if(class_no == '2')
                     {
