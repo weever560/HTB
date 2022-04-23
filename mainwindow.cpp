@@ -8,7 +8,7 @@
 #include <QString>
 #include <QSerialPort>        //提供访问串口的功能
 #include <QSerialPortInfo>    //提供系统中存在的串口的信息
-
+#include "control.h"
 
 //全局变量定义
 QString Temp1,Humi1,Light1;//温度、湿度、亮度
@@ -58,7 +58,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(850,500);   //禁止拉伸
     ui->pushButton3->setDisabled(true);
     ui->pushButton4->setDisabled(true);
-
+    control *q = new control();
+    q->show();
 
     //***********登录腾讯云物联网通信必要设置******************
     QByteArray password = "355d5fa9996e10b9f1a5e2dea0744a1b9998ce12314a58a8a20f17dfc818a767;hmacsha256";//填写密码
@@ -104,7 +105,12 @@ MainWindow::MainWindow(QWidget *parent)
         connect(Class2,SIGNAL(shijue2()),
                     this,SLOT(changeshijue()));
 
-
+        connect(q,SIGNAL(huchange()),
+                    this,SLOT(changeshijue()));
+        connect(q,SIGNAL(huchange()),
+                    Class1,SLOT(stateupdata1()));
+        connect(q,SIGNAL(huchange()),
+                    Class2,SLOT(stateupdata2()));
 
 
 }

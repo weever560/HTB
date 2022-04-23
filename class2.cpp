@@ -6,7 +6,7 @@
 #include <QSerialPortInfo>    //提供系统中存在的串口的信息
 
 //全局变量定义
-int mode2=1;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
+int mode2=0;   //系统自动手动状态的标志变量 1:手动控制 0：自动控制
 extern QString Temp2,Humi2,Light2;//温度、湿度、亮度
 extern QString FS2_1,FS2_2,D2_1,D2_2,D2_3,D2_4;//风扇和灯
 extern QString KT2;     //空调
@@ -36,6 +36,13 @@ class2::class2(QWidget *parent) :
     setPalette(pal);
     this->setFixedSize(450,470);   //禁止拉伸
     ui->checkBox2->setText("手动模式");
+    ui->d1_2->setDisabled(true);
+    ui->d2_2->setDisabled(true);
+    ui->d3_2->setDisabled(true);
+    ui->d4_2->setDisabled(true);
+    ui->fs1_2->setDisabled(true);
+    ui->fs2_2->setDisabled(true);
+    ui->kt2->setDisabled(true);
 }
 
 class2::~class2()
@@ -243,11 +250,7 @@ void class2::recv_message(QByteArray message)
 
 void class2::readyReadData()
 {
-    // 从接收缓冲区中读取串口数据
-    QByteArray buffer = serial2.readAll();
-    //测试格式  视觉人数处理
-    qDebug()<<buffer<<endl;
-    qDebug()<<"===识别end==="<<endl;
+
 }
 
 

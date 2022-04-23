@@ -67,6 +67,14 @@ class1::class1(QWidget *parent) :
     this->setFixedSize(450,470);   //禁止拉伸
 
     ui->checkBox->setText("手动模式");
+    ui->d1->setDisabled(true);
+    ui->d2->setDisabled(true);
+    ui->d3->setDisabled(true);
+    ui->d4->setDisabled(true);
+    ui->fs1->setDisabled(true);
+    ui->fs2->setDisabled(true);
+    ui->kt->setDisabled(true);
+
 
 }
 
@@ -112,13 +120,7 @@ void class1::startshow()
                     this,SLOT(send_message1(char * )));
         connect(q,SIGNAL(huchange()),this,SLOT(stateupdata1()));
 
-        ui->d1->setDisabled(true);
-        ui->d2->setDisabled(true);
-        ui->d3->setDisabled(true);
-        ui->d4->setDisabled(true);
-        ui->fs1->setDisabled(true);
-        ui->fs2->setDisabled(true);
-        ui->kt->setDisabled(true);
+
 
         //test card
         //QByteArray test = "#1#26#41#277.50#11#1111#1#00000001#1";
@@ -496,6 +498,7 @@ void class1::on_kt_clicked()
 
 void class1::stateupdata1()
 {
+    emit shijue();
     ui->checkBox_2->setChecked(true);
     ui->textBrowser1_rs->setText(QString::number(HumanNum1));
     ui->textBrowser1_wd->setText(Temp1);

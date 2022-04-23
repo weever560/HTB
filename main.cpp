@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
     //Widget w;
     //w.show();
     //成品记得注释下面的
-     //MainWindow q;
-     //q.show();
-     class1 e;
-     e.startshow();
+     MainWindow q;
+     q.show();
+     //class1 e;
+     //e.startshow();
     //control z;
     //z.show();
 
