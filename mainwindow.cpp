@@ -126,8 +126,8 @@ void MainWindow::connected_isr()
     //client->subscribe(QMqttTopicFilter("DXNET9YB6G/222/test"));//订阅频道
     client->subscribe(QMqttTopicFilter("LK58090NWK/QT/control"));//订阅频道
 }
-           //#1    #26 #41 #277.50  #11    #1111 #1  #"
-//收到消息回调 #课室号#温度#湿度#亮度（6）#风扇12#灯1234#空调#卡号（8）#
+           //#1    #26 #41 #277.50  #11    #1111 #1  #00000001#1
+//收到消息回调 #课室号#温度#湿度#亮度（6）#风扇12#灯1234#空调#卡号（8）#1
            //0     2   5   8        15    18     23  25
 void MainWindow::recv_message(QByteArray message)
 {

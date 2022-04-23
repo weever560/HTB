@@ -120,6 +120,10 @@ void class1::startshow()
         ui->fs2->setDisabled(true);
         ui->kt->setDisabled(true);
 
+        //test card
+        //QByteArray test = "#1#26#41#277.50#11#1111#1#00000001#1";
+        //recv_message(test);
+
 }
 
 //成功连接回调
@@ -556,7 +560,7 @@ void class1::stateupdata1()
 
     //如果课室2也没人，1正常开。
     //2的人数大于1且1少人。1劝退
-    if(HumanNum1<10 && HumanNum2 >= HumanNum1)
+    if(HumanNum1<10 && HumanNum2 > HumanNum1)
     {
         if(flag == 0)
         {

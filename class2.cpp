@@ -115,7 +115,7 @@ void class2::recv_message(QByteArray message)
 
     qDebug()<<"2接收信息:"<<message<<endl;
 
-    for( int i = 0 ; i < message.size()  ; i++  )
+    for( int i = 0 ; i <= message.size()  ; i++  )
     {
         if( message[i] == '#' )
         {
