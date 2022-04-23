@@ -11,19 +11,19 @@
 
 
 //全局变量定义
-QString Temp1="0",Humi1="0",Light1="0";//温度、湿度、亮度
-QString FS1_1="0",FS1_2="0",D1_1="0",D1_2="0",D1_3="0",D1_4="0";//风扇和灯
-QString KT1="0";
-QString Card_ID1="0";//最后处理过的卡号字符串
+QString Temp1,Humi1,Light1;//温度、湿度、亮度
+QString FS1_1,FS1_2,D1_1,D1_2,D1_3,D1_4;//风扇和灯
+QString KT1;
+QString Card_ID1;//最后处理过的卡号字符串
 extern int HumanNum1;//人数
 extern int HumanNum2;//人数
 
 extern int mode1;
 extern int mode2;
-QString Temp2="0",Humi2="0",Light2="0";//温度、湿度、亮度
-QString FS2_1="0",FS2_2="0",D2_1="0",D2_2="0",D2_3="0",D2_4="0";//风扇和灯
-QString KT2="0";
-QString Card_ID2="0";//最后处理过的卡号字符串
+QString Temp2,Humi2,Light2;//温度、湿度、亮度
+QString FS2_1,FS2_2,D2_1,D2_2,D2_3,D2_4;//风扇和灯
+QString KT2;
+QString Card_ID2;//最后处理过的卡号字符串
 
  QByteArray input[255] = {"\x01","\x02","\x03","\x04","\x05","\x06","\x07","\x08","\x09","\x0A","\x0B","\x0C","\x0D","\x0E","\x0F"
                    ,"\x10","\x11","\x12","\x13","\x14","\x15","\x16","\x17","\x18","\x19","\x1A","\x1B","\x1C","\x1D","\x1E","\x1F"
@@ -139,7 +139,7 @@ void MainWindow::recv_message(QByteArray message)
 
     qDebug()<<"接收信息:"<<message<<endl;
 
-    for( int i = 0 ; i < message.size()  ; i++  )
+    for( int i = 0 ; i <= message.size()  ; i++  )
     {
         if( message[i] == '#' )
         {

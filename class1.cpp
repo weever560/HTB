@@ -148,7 +148,7 @@ void class1::send_message1(char * msg)
 void class1::recv_message(QByteArray message)
 {
     int num = 0 ;   //记录#的多少，相对应数据含义
-    QString class_no="0";
+    QString class_no="1";
     QString temp1="0",temp2="0";//亮度整数
     int temp[10]={0};
     int locat,length;
@@ -160,7 +160,8 @@ void class1::recv_message(QByteArray message)
 
     qDebug()<<"1接收信息:"<<message<<endl;
 
-    for( int i = 0 ; i < message.size()  ; i++  )
+    //为了识别卡号多跑一次
+    for( int i = 0 ; i <= message.size()  ; i++  )
     {
         if( message[i] == '#' )
         {
@@ -179,6 +180,7 @@ void class1::recv_message(QByteArray message)
             case 2:     //课室号,只能实现一位
                 {
                     class_no = message.mid(locat,length);
+                    qDebug()<<"class"<<class_no;//debug
                 }break;
 
             case 3:     //温度
@@ -256,6 +258,7 @@ void class1::recv_message(QByteArray message)
                     if(class_no == '1')
                     {
                         KT1 = message.mid(locat,1);
+                        qDebug()<<"kt1"<<KT1;//debug
                     }
                     else if(class_no == '2')
                     {
